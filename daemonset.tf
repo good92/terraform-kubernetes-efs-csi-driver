@@ -45,7 +45,9 @@ resource "kubernetes_daemonset" "efs" {
 
         container {
           name              = "efs-plugin"
-          image             = "amazon/aws-efs-csi-driver:v1.3.8"
+          # https://gallery.ecr.aws/eks-distro/kubernetes-csi/livenessprobe
+          image = "public.ecr.aws/eks-distro/kubernetes-csi/livenessprobe:v2.1.0-eks-1-20-19"
+          #image = "public.ecr.aws/eks-distro/kubernetes-csi/livenessprobe:v2.2.0-eks-1-18-16"
           image_pull_policy = "IfNotPresent"
 
           args = ["--endpoint=$(CSI_ENDPOINT)", "--logtostderr", "--v=${tostring(var.log_level)}"]
